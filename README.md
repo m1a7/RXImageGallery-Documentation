@@ -233,7 +233,7 @@ In other words, you pass a certain `frame` relative to which the calculation wil
 
 ## 📃 Solution architecture
 
-[Full Image](https://github.com/m1a7/RXImageGallerySDK/blob/master/Documentation/Images/SolutionArchitecture.png)
+[Full Image](https://github.com/m1a7/RXImageGallery-Documentation/blob/master/Documentation/Images/SolutionArchitecture.png)
 
 ![](Documentation/Images/SolutionArchitecture.png)
 
@@ -258,7 +258,7 @@ Modifications were made in `KSPhotoBrowser`, `NHBalancedFlowLayout`, `ObjectiveS
 
 ## 👨🏼‍💻 Author
 
-[👨🏼‍💻 @m1a7](https://github.com/m1a7/RXWebCache/blob/master/github.com/m1a7)  
+[👨🏼‍💻 @m1a7](https://github.com/m1a7/RXImageGallery-Documentation/blob/master/github.com/m1a7)  
 👌🏻 [thisismymail03@gmail.com](mailto:thisismymail03@gmail.com)
 
 💼 **RXImageGallery** - is a private technology with closed source code.

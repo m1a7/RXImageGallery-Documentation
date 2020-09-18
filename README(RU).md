@@ -228,7 +228,7 @@ The method is called by the gallery to change its own size after calculating the
 
 ## 📃 Архитектура решения
 
-[Full Image](https://github.com/m1a7/RXImageGallerySDK/blob/master/Documentation/Images/SolutionArchitecture.png)
+[Full Image](https://github.com/m1a7/RXImageGallery-Documentation/blob/master/Documentation/Images/SolutionArchitecture.png)
 
 ![](Documentation/Images/SolutionArchitecture.png)
 
@@ -253,7 +253,7 @@ The method is called by the gallery to change its own size after calculating the
 
 ## 👨🏼‍💻 Автор
 
-[👨🏼‍💻 @m1a7](https://github.com/m1a7/RXWebCache/blob/master/github.com/m1a7)  
+[👨🏼‍💻 @m1a7](https://github.com/m1a7/RXImageGallery-Documentation/blob/master/github.com/m1a7)  
 👌🏻 [thisismymail03@gmail.com](mailto:thisismymail03@gmail.com)
 
 💼 **RXImageGallery** - это приватная технология с закрытым исходным кодом.
