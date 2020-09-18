@@ -1,0 +1,143 @@
+
+
+// Frameworks
+#import <RXImageGallerySDK/RXImageGallerySDK.h>
+#import <FLAnimatedImage/FLAnimatedImage.h>
+#import <ObjcSugar/ObjcSugar.h>
+
+
+#define IS_PORTRAIT     UIDeviceOrientationIsPortrait([[UIApplication sharedApplication] statusBarOrientation])
+
+
+@interface ViewController () <RXImageGalleryDelegate>
+
+@property (nonatomic, strong) UIScrollView* scrollView;
+
+/*--------------------------------------------------------------------------------------------------------------
+  The gallery itself.
+ --------------------------------------------------------------------------------------------------------------*/
+@property (nonatomic, strong) RXImageGallery* gallery;
+
+/*--------------------------------------------------------------------------------------------------------------
+ Array of data for the gallery
+ --------------------------------------------------------------------------------------------------------------*/
+@property (nonatomic, strong) NSArray<RXIG_Image*>* models;
+
+@end
+
+
+@implementation ViewController
+
+#pragma mark - Life cycle
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    //------------------------------------------------------------------------------------------//
+    // Mockup arrays with UIImage
+    
+    NSArray<UIImage*>* widelyUIImages = [[RXIG_ImageMockuper widelyUIImages] take:2];
+    NSArray<UIImage*>* highlyUIImages = [[RXIG_ImageMockuper highlyUIImages] take:2];
+
+    NSArray<RXIG_Image*>* widelyModelsWithUIImages = [[RXIG_ImageMockuper widelyModelsWithUIImages] take:1];
+    NSArray<RXIG_Image*>* highlyModelsWithUIImages = [[RXIG_ImageMockuper highlyModelsWithUIImages] take:10];
+    self.models = widelyModelsWithUIImages; // (!) need if you will work with help delegate
+
+    NSArray<UIImage*>*    randomUIImages           = [[RXIG_ImageMockuper randomUIImages] take:5];
+    NSArray<RXIG_Image*>* randomModelsWithUIImages = [[RXIG_ImageMockuper randomModelsWithUIImages] take:10];
+
+    
+    // Mockup arrays with URLs
+    NSArray<NSString*>* widelyImagesURLs = [[RXIG_ImageMockuper widelyImagesURLs] take:2];
+    NSArray<NSString*>* highlyImagesURLs = [[RXIG_ImageMockuper highlyImagesURLs] take:2];
+    
+    NSArray<RXIG_Image*>* widelyModelWithURLs = [[RXIG_ImageMockuper widelyModelWithURLs] take:2];
+    NSArray<RXIG_Image*>* highlyModelWithURLs = [[RXIG_ImageMockuper highlyModelWithURLs] take:2];
+    
+    NSArray<NSString*>* randomURLs            = [[RXIG_ImageMockuper randomURLs] take:5];
+    NSArray<RXIG_Image*>* randomModelWithURLs = [[RXIG_ImageMockuper randomModelWithURLs] take:2];
+    
+    NSArray<NSData*>*            gifData = [RXIG_ImageMockuper animatedImagesData];
+    //*/
+    NSArray<FLAnimatedImage*>* gifImages = [RXIG_ImageMockuper animatedImages];
+    
+    
+    
+    // Setup ScrollView
+    self.scrollView = [[UIScrollView alloc]initWithFrame:self.view.frame];
+    [self.scrollView setShowsVerticalScrollIndicator:YES];
+    self.scrollView.scrollEnabled          = YES;
+    self.scrollView.userInteractionEnabled = YES;
+    self.scrollView.contentSize= CGSizeMake(320 ,1500);
+    self.scrollView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    [self.view addSubview:self.scrollView];
+    
+    
+    // Setup Gallery
+    float offset = 15.f;
+    float parentWidth = CGRectGetWidth(self.view.frame);
+    CGRect frame = CGRectMake(offset, CGRectGetMidY(self.view.frame)-(CGRectGetMidY(self.view.frame)/3), parentWidth-(offset*2), parentWidth);
+    
+       
+    NSArray* urls =
+    @[
+      @"https://64.media.tumblr.com/6b8e422558021ab61fa8970c67632134/fb7cfaa5bad992a9-67/s640x960/e9db57aa8fd2072ea255c42cdbe4a1d4f25f0fdb.jpg",
+      @"https://64.media.tumblr.com/27caef209d8e87efb13d35d59625186c/tumblr_p60i3eyF6F1vw9p26o5_500.jpg",
+      @"https://64.media.tumblr.com/19fe1f463336152684eb6157d1fb87f8/bbfc0e2f3cf5eb62-c4/s500x750/3c850221030bd8c260980e2a2f40d14d2b3d285e.jpg",
+      @"https://66.media.tumblr.com/affdc9a65b570676d4833844d438ce8e/19c9f6aacfaae780-f1/s640x960/243b06f99cae1ec4a61ad5092b595121c026fdbd.png",
+      @"https://i.pinimg.com/736x/41/d7/1c/41d71c6ee934e10e3556c83d8f8ca38b.jpg",
+     ];
+    
+    
+    
+      self.gallery  = [RXImageGallery initWithFrame:frame layout:nil urls:urls];           	      // ✅ work with url
+    //self.gallery  = [RXImageGallery initWithFrame:frame layout:nil images:widelyUIImages];          // ✅ work with UIImage
+    //self.gallery  = [RXImageGallery initWithFrame:frame layout:nil models:widelyModelsWithUIImages];// ✅ work with RXIG_Image
+    //self.gallery = [RXImageGallery initWithFrame:frame layout:nil delegate:self];                   // ✅ work with Delegate
+    //self.gallery = [RXImageGallery initWithFrame:frame layout:nil data:gifData];                    // ✅ Work with NSData (only gif images)
+    //self.gallery = [RXImageGallery initWithFrame:frame layout:nil animateImages:gifImages];         // ✅ Work with FLAnimatedImage
+ 
+    
+    
+    // Testing the case when there is a model with a url and the image dimensions are immediately available
+    /*
+    NSArray<NSString*>* randomURLs = [[RXIG_ImageMockuper widelyImagesURLs] take:3];
+    NSArray<RXIG_Image*>* models   = [randomURLs map:^id(NSString* url, NSUInteger idx) {
+        return [RXIG_Image initWithURL:url originalImageSize:CGSizeMake(1600, 1200)];
+    }];
+    self.gallery = [RXImageGallery initWithFrame:frame layout:nil  models:models];
+    */
+    
+    [self.scrollView addSubview:self.gallery];
+}
+
+
+/*--------------------------------------------------------------------------------------------------------------
+  This method is called when the device orientation changes
+ --------------------------------------------------------------------------------------------------------------*/
+-(void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+    [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+
+    // Resizes the table cell rows to match the new size.
+    [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext> context) {
+
+        UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+
+            if (orientation == UIInterfaceOrientationPortrait){
+                float offset = 15.f;
+                float parentWidth = CGRectGetWidth(self.view.frame);
+                CGRect frame = CGRectMake(offset, CGRectGetMidY(self.view.frame)-(CGRectGetMidY(self.view.frame)/3), parentWidth-(offset*2), parentWidth);
+                self.gallery.frame = frame;
+            } else if ((orientation == UIInterfaceOrientationLandscapeRight) || (orientation == UIInterfaceOrientationLandscapeLeft)) {
+                float offset = 15.f;
+                float width  = (self.view.frame.size.width)-(4*offset);
+                self.gallery.frame = CGRectMake(offset, offset, width, self.view.frame.size.height-(2*offset));
+            }
+    } completion:nil];
+}
